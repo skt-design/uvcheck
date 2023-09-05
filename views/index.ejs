@@ -1,0 +1,64 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Signin Template for Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+  </head>
+
+  <body class="text-center">
+    <div class="vertical">
+      <div>
+        <form class="form-signin" action="/submit" method="post">
+          <h1 class="h3 mb-23 font-weight-normal">Which city to check UV for?</h1>
+          <input type="text" name="inputCity" class="mt-4 form-control" placeholder="City name" required autofocus>
+          <button class="btn mt-3 btn-lg btn-primary btn-block" type="submit">Submit</button>    
+        </form>
+      </div>
+
+      <% function formatISODateToHumanReadable(isoDateString) {
+        const date = new Date(isoDateString);
+        const options = {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          fractionalSecondDigits: 3, // Milliseconds          
+        };
+        return date.toLocaleDateString(undefined, options);
+      } %>      
+
+      <div class="p-5 text-center bg-body-tertiary rounded-3">
+        <% if (locals.uvdata) { %>
+            <p><%= city.toUpperCase()%></p>
+            <ul>
+              <li>Current UV: <%= uvdata.uv%></li>
+              <li>Current time: <%= formatISODateToHumanReadable(uvdata.uv_time)%></li>
+              <li>Max UV: <%= uvdata.uv_max%></li>
+              <li>Max UV time: <%= formatISODateToHumanReadable(uvdata.uv_max_time)%></li>
+              <li>Ozone observation: <%= uvdata.ozone%></li>
+              <li>Ozone observation time: <%= formatISODateToHumanReadable(uvdata.ozone_time)%></li>
+              <li>Time taken to burn for Indian skin (in min): <%= uvdata.safe_exposure_time.st5%></li>
+            </ul>
+        <% } else { %>
+          <h4 class="text-body-emphasis">Nothing to display</h4>
+        <% } %>  
+      </div>
+    </div>
+  </body>
+</html>
+
